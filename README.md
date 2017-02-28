@@ -6,7 +6,7 @@ Some features those available at that moment:
 * Authorization (now only checking data(login, password) of some user)
 - Operatinons those process data of courses and persons: 
   reading, inserting and deleting entity
-- Date filter (getting forthcoming a lecture of some course and
+- Date filter (getting forthcoming lecture of some course and
                getting lectures in arbitrary period in time)
                
   #### Project descriptions
