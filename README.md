@@ -9,5 +9,8 @@ Some features those available at that moment:
 - Date filter (getting forthcoming a lecture of some course and
                getting lectures in arbitrary period in time)
                
-  #### Samples of URLs for using operations
-       You can find the samples of using different URLs in the file URLsSchedule.pdf
+  #### Project descriptions
+       For descriptions go to this link and download the folder "CSSchedule Descriptions"
+       https://www.dropbox.com/sh/2j5elr4j02vyye3/AACkPbMMtkN7ViPiznMyqvf-a?dl=0
+       Samples of using URLs you can find in the file URLsSchedule.pdf
+
