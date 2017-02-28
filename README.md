@@ -11,6 +11,6 @@ Some features those available at that moment:
                
   #### Project descriptions
        For descriptions go to this link and download the folder "CSSchedule Descriptions"
-       https://www.dropbox.com/sh/2j5elr4j02vyye3/AACkPbMMtkN7ViPiznMyqvf-a?dl=0
+       [www.dropbox.com](https://www.dropbox.com/sh/2j5elr4j02vyye3/AACkPbMMtkN7ViPiznMyqvf-a?dl=0)
        Samples of using URLs you can find in the file URLsSchedule.pdf
 
