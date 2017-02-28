@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	      http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
+
+    <display-name>StudentsAssistant</display-name>
+
+    <servlet>
+        <servlet-name>CoursesServlet</servlet-name>
+        <servlet-class>org.cschedule.app.servlet.entities.course.CoursesServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PersonServlet</servlet-name>
+        <servlet-class>org.cschedule.app.servlet.entities.person.PersonServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>authorization</servlet-name>
+        <servlet-class>org.cschedule.app.servlet.authorization.AuthorizationServlet</servlet-class>
+    </servlet>
+
+
+    <servlet-mapping>
+        <servlet-name>CoursesServlet</servlet-name>
+        <url-pattern>/courses/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PersonServlet</servlet-name>
+        <url-pattern>/persons/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>authorization</servlet-name>
+        <url-pattern>/authorization</url-pattern>
+    </servlet-mapping>
+
+    <listener>
+        <listener-class>org.cschedule.ContextListener</listener-class>
+    </listener>
+
+</web-app>
