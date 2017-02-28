@@ -10,4 +10,4 @@ Some features those available at that moment:
                getting lectures in arbitrary period in time)
                
   #### Samples of URLs for using operations
-       You can find of using different URLs in the file URLsSchedule.pdf
+       You can find the samples of using different URLs in the file URLsSchedule.pdf
