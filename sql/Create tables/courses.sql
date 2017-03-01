@@ -1,5 +1,0 @@
-CREATE TABLE `courses` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(140) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1
