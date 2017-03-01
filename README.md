@@ -13,4 +13,5 @@ Some features those available at that moment:
    For descriptions go to this link and download the folder "CSSchedule Descriptions": <br />
    <https://www.dropbox.com/sh/2j5elr4j02vyye3/AACkPbMMtkN7ViPiznMyqvf-a?dl=0> <br />
    Samples of using URLs you can find in the file URLsSchedule.pdf
-
+  #### Database 
+   In the folder "sql" you can find sql-scripts for creating tables and inserting initial data
