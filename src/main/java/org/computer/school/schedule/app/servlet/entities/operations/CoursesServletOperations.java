@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * Created by mac on 22.02.17.
  */
-public class CoursesServletEntityOperations implements ServletEntityOperations {
+public class CoursesServletOperations implements ServletEntityOperations {
     private Course course;
 
     private HttpServletResponse resp;
@@ -32,9 +32,9 @@ public class CoursesServletEntityOperations implements ServletEntityOperations {
 
     private WebPageMessage m;
 
-    public CoursesServletEntityOperations(HttpServletResponse resp,
-                                          Map<String, String[]> pathParams,
-                                          String[] pathTokens) {
+    public CoursesServletOperations(HttpServletResponse resp,
+                                    Map<String, String[]> pathParams,
+                                    String[] pathTokens) {
         this.resp = resp;
         this.pathTokens = pathTokens;
         this.pathParams = pathParams;

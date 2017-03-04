@@ -15,16 +15,16 @@ import java.util.Map;
 /**
  * Created by mac on 22.02.17.
  */
-public class PersonsServletEntityOperations implements ServletEntityOperations {
+public class PersonsServletOperations implements ServletEntityOperations {
     private List<Person> persons;
 
     private String[] pathTokens;
     private Map<String, String[]> pathParams;
 
     private WebPageMessage m;
-    public PersonsServletEntityOperations(HttpServletResponse resp,
-                                          Map<String, String[]> pathParams,
-                                          String[] pathTokens) {
+    public PersonsServletOperations(HttpServletResponse resp,
+                                    Map<String, String[]> pathParams,
+                                    String[] pathTokens) {
         this.pathTokens = pathTokens;
         this.pathParams = pathParams;
 

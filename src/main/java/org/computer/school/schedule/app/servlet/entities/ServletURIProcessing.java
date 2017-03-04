@@ -2,8 +2,8 @@ package org.computer.school.schedule.app.servlet.entities;
 
 import org.computer.school.schedule.app.servlet.WebPageMessage;
 import org.computer.school.schedule.app.servlet.entities.operations.ServletEntityOperations;
-import org.computer.school.schedule.app.servlet.entities.operations.CoursesServletEntityOperations;
-import org.computer.school.schedule.app.servlet.entities.operations.PersonsServletEntityOperations;
+import org.computer.school.schedule.app.servlet.entities.operations.CoursesServletOperations;
+import org.computer.school.schedule.app.servlet.entities.operations.PersonsServletOperations;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -46,13 +46,13 @@ public class ServletURIProcessing extends HttpServlet implements ServletURIProce
                 switch(pathTokens[1]) {
                     case "courses": {
                         servletOperation =
-                                new CoursesServletEntityOperations(
+                                new CoursesServletOperations(
                                         response, pathParams, pathTokens);
                         break;
                     }
                     case "persons": {
                         servletOperation =
-                                new PersonsServletEntityOperations(
+                                new PersonsServletOperations(
                                         response, pathParams, pathTokens);
                         break;
                     }
