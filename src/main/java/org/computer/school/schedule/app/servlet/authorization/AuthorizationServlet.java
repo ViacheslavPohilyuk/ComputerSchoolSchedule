@@ -21,7 +21,7 @@ public class AuthorizationServlet extends HttpServlet {
     private WebPageMessage m;
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.request = request;
         this.response = response;
         m = new WebPageMessage(response);
