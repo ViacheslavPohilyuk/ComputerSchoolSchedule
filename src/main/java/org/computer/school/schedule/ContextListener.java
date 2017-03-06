@@ -1,8 +1,5 @@
 package org.computer.school.schedule;
 
-//import org.itschoolhillel.dnepropetrovsk.datasource.EntitySource;
-//import org.itschoolhillel.dnepropetrovsk.datasource.sql.SQLEntitySource;
-
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 

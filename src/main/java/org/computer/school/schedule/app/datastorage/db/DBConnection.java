@@ -11,7 +11,7 @@ import java.util.Properties;
 /**
  * Created by mac on 30.01.17.
  */
-public class DBConnection implements ConnectionEntity{
+public class DBConnection implements ConnectionEntity {
     private Properties prop = new Properties();
     private Connection conn = null;
 
@@ -32,8 +32,11 @@ public class DBConnection implements ConnectionEntity{
 
     public void connectDatabase() {
         try {
-            String ssl = "?verifyServerCertificate=false&useSSL=true";
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Courses" + ssl, prop);
+            //String ssl = "?verifyServerCertificate=false&useSSL=true";
+            conn = DriverManager.getConnection(
+                    "jdbc:mysql://rds-mysql-computerschoolschedule.cmrrktnryoch.eu-central-1.rds.amazonaws.com" +
+                                        ":3306" +
+                                        "/ComputerSchoolSchedule", prop);
         } catch (SQLException e) {
             System.err.println("Database connection error!");
             e.printStackTrace();
@@ -41,12 +44,12 @@ public class DBConnection implements ConnectionEntity{
     }
 
     public void close(Connection conn) {
-            try {
-                conn.close();
-            }
-            catch (SQLException e) {
-                System.err.println("Database closing error!");
-                e.printStackTrace();
-            }
+        try {
+            conn.close();
+        }
+        catch (SQLException e) {
+            System.err.println("Database closing error!");
+            e.printStackTrace();
+        }
     }
 }
