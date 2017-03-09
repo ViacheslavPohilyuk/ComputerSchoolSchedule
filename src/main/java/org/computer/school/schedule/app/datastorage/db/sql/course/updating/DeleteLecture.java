@@ -16,11 +16,10 @@ import java.sql.SQLException;
 public class DeleteLecture implements SQLUpdateEntity<Integer[]> {
     private String courseTitle;
     private String lectureTitle;
+    private Connection databaseConnection;
 
-    private DBConnection DBconnect = new DBConnection();
-    private Connection conn = DBconnect.getConnection();
-
-    public DeleteLecture(String courseTitle, String lectureTitle) {
+    public DeleteLecture(Connection databaseConnection, String courseTitle, String lectureTitle) {
+        this.databaseConnection = databaseConnection;
         this.courseTitle = courseTitle;
         this.lectureTitle = lectureTitle;
     }
@@ -32,7 +31,7 @@ public class DeleteLecture implements SQLUpdateEntity<Integer[]> {
         RowsTableCount rowscount = new RowsTableCount();
 
         /** Deleting lectures by its title and by the title of its course */
-        try (PreparedStatement preparedSelectID = conn.prepareStatement(sql())) {
+        try (PreparedStatement preparedSelectID = databaseConnection.prepareStatement(sql())) {
             /** Getting ids of entities **/
             setEntityParameters(preparedSelectID);
             resultSet = preparedSelectID.executeQuery();
@@ -50,15 +49,12 @@ public class DeleteLecture implements SQLUpdateEntity<Integer[]> {
             String sqlLectureIDDelete = "Delete from course_lectures " +
                                         "Where lecture_id = ?";
             DeleteEntity deleteEntity =
-                    new DeleteEntity(lecturesID, sqlLectureDelete, sqlLectureIDDelete, conn);
+                    new DeleteEntity(lecturesID, sqlLectureDelete, sqlLectureIDDelete, databaseConnection);
 
             deleteCount = deleteEntity.deleteEntity();
         }
         catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
-            DBconnect.close(conn);
         }
         return deleteCount;
     }

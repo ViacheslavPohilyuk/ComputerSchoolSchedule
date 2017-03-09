@@ -17,13 +17,12 @@ public class InsertPerson implements SQLUpdateEntity<Integer> {
     private String email;
     private String password;
     private String subscriptions[];
-
-    private DBConnection DBconnect = new DBConnection();
-    private Connection conn = DBconnect.getConnection();
+    private Connection databaseConnection;
 
     private int key; // id of new person
 
-    public InsertPerson(Person person) {
+    public InsertPerson(Connection databaseConnection, Person person) {
+        this.databaseConnection = databaseConnection;
         this.fname = person.getFname();
         this.surname = person.getSurname();
         this.patronymic = person.getPatronymic();
@@ -37,14 +36,12 @@ public class InsertPerson implements SQLUpdateEntity<Integer> {
     public Integer updateProcessing() {
         Integer updateCount = personInsert();
                        subscriptionsInsert();
-
-        DBconnect.close(conn);
         return updateCount;
     }
 
-    public Integer personInsert() {
+    private Integer personInsert() {
         Integer updateCount = 0;
-        try (PreparedStatement preparedPerson = conn.prepareStatement(sql(),
+        try (PreparedStatement preparedPerson = databaseConnection.prepareStatement(sql(),
                                                 Statement.RETURN_GENERATED_KEYS))
         {
             setEntityParameters(preparedPerson);
@@ -63,9 +60,9 @@ public class InsertPerson implements SQLUpdateEntity<Integer> {
     }
 
     private void subscriptionsInsert() {
-        try(PreparedStatement preparedSubscription = conn.prepareStatement(sqlSubscriptionsStatement())) {
+        try(PreparedStatement preparedSubscription = databaseConnection.prepareStatement(sqlSubscriptionsStatement())) {
             if (subscriptions.length > 0) {
-                SubscriptionsIDByTitles subID = new SubscriptionsIDByTitles(subscriptions, conn);
+                SubscriptionsIDByTitles subID = new SubscriptionsIDByTitles(subscriptions, databaseConnection);
                 int[] subsPersonId = subID.executeRead();
 
                 for (int id : subsPersonId) {

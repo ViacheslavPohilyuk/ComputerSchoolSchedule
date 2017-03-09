@@ -20,11 +20,10 @@ public class InsertLecture implements SQLUpdateEntity<Integer> {
     private final String title;
     private final String description;
     private final String courseName;
+    private Connection databaseConnection;
 
-    private DBConnection DBconnect = new DBConnection();
-    private Connection conn = DBconnect.getConnection();
-
-    public InsertLecture(String courseName, Lecture lecture) {
+    public InsertLecture(Connection databaseConnection, String courseName, Lecture lecture) {
+        this.databaseConnection = databaseConnection;
         this.startTime = new Timestamp(lecture.startTime().getTime());
         this.endTime = new Timestamp(lecture.endTime().getTime());
             this.roomFloor = lecture.lectureRoom().floor();
@@ -38,8 +37,8 @@ public class InsertLecture implements SQLUpdateEntity<Integer> {
     @Override
     public Integer updateProcessing() {
         int updateCount = 0;
-        try (PreparedStatement preparedLecture = conn.prepareStatement(sql(), Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement preparedCourseLectureID = conn.prepareStatement(sqlCourseLecturesIDStatement())) {
+        try (PreparedStatement preparedLecture = databaseConnection.prepareStatement(sql(), Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement preparedCourseLectureID = databaseConnection.prepareStatement(sqlCourseLecturesIDStatement())) {
 
              setEntityParameters(preparedLecture);
              preparedLecture.executeUpdate();
@@ -57,9 +56,6 @@ public class InsertLecture implements SQLUpdateEntity<Integer> {
         }
         catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
-            DBconnect.close(conn);
         }
         return updateCount;
     }

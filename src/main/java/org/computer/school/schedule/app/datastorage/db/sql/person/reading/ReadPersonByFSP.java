@@ -17,12 +17,11 @@ public class ReadPersonByFSP implements SQLReadEntity<List<Person>> {
     private String fname;
     private String surname;
     private String patronymic;
-
     private List<Person> result;
-    private DBConnection DBconnect = new DBConnection();
-    private Connection conn = DBconnect.getConnection();
+    private Connection databaseConnection;
 
-    public ReadPersonByFSP(String fname, String surname, String patronymic) {
+    public ReadPersonByFSP(Connection databaseConnection, String fname, String surname, String patronymic) {
+        this.databaseConnection = databaseConnection;
         this.fname = fname;
         this.surname = surname;
         this.patronymic = patronymic;
@@ -37,13 +36,14 @@ public class ReadPersonByFSP implements SQLReadEntity<List<Person>> {
     @Override
     public List<Person> extractResult(ResultSet resultSet) {
         ResultSet resultPerson;
-        try (PreparedStatement preparedPerson = conn.prepareStatement(sql())) {
+        try (PreparedStatement preparedPerson = databaseConnection.prepareStatement(sql())) {
             setParameters(preparedPerson);
             resultPerson = preparedPerson.executeQuery();
 
-            PersonContext personContextExtractResult = new PersonContext();
+            PersonContext personContextExtractResult = new PersonContext(databaseConnection);
             PersonContext personContextSetSubscriptions =
-                    new PersonContext(personContextExtractResult.extractResult(resultPerson),
+                    new PersonContext(databaseConnection,
+                                      personContextExtractResult.extractResult(resultPerson),
                                       personContextExtractResult.getIdentifiers());
 
             personContextSetSubscriptions.setSubscriptionsTitles();
@@ -51,9 +51,6 @@ public class ReadPersonByFSP implements SQLReadEntity<List<Person>> {
         }
         catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
-            DBconnect.close(conn);
         }
         return result;
     }

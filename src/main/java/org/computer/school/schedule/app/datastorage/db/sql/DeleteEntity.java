@@ -11,19 +11,19 @@ public class DeleteEntity {
     private Integer[] entitiesID;
     private String firstSQLQuery;
     private String secondSQLQuery;
-    private Connection conn;
+    private Connection databaseConnection;
 
-    public DeleteEntity(Integer[] entitiesID, String firstSQLQuery, String secondSQLQuery, Connection conn) {
+    public DeleteEntity(Integer[] entitiesID, String firstSQLQuery, String secondSQLQuery, Connection databaseConnection) {
         this.entitiesID = entitiesID;
         this.firstSQLQuery = firstSQLQuery;
         this.secondSQLQuery = secondSQLQuery;
-        this.conn = conn;
+        this.databaseConnection = databaseConnection;
     }
 
     public Integer[] deleteEntity() {
         Integer[] deletedEntities = null;
-        try (PreparedStatement preparedEntityDelete = conn.prepareStatement(firstSQLQuery);
-             PreparedStatement preparedSecondEntityDelete = conn.prepareStatement(secondSQLQuery)) {
+        try (PreparedStatement preparedEntityDelete = databaseConnection.prepareStatement(firstSQLQuery);
+             PreparedStatement preparedSecondEntityDelete = databaseConnection.prepareStatement(secondSQLQuery)) {
             for (Integer id : entitiesID) {
                 setDeleteParameters(preparedEntityDelete, id);
                 setDeleteParameters(preparedSecondEntityDelete, id);

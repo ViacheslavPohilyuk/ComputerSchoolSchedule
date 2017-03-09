@@ -13,11 +13,11 @@ import java.util.List;
  * Created by mac on 16.02.17.
  */
 public class SubscriptionsTitlesByID implements SQLReadEntity<String[][]>  {
-    private Connection conn;
+    private Connection databaseConnection;
     private List<Integer> idList;
 
-    public SubscriptionsTitlesByID(List<Integer> idList, Connection conn) throws SQLException {
-        this.conn = conn;
+    public SubscriptionsTitlesByID(Connection databaseConnection, List<Integer> idList, Connection conn) throws SQLException {
+        this.databaseConnection = databaseConnection;
         this.idList = idList;
 
         conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -34,7 +34,7 @@ public class SubscriptionsTitlesByID implements SQLReadEntity<String[][]>  {
         String[][] subscriptions = new String[idList.size()][];
         RowsTableCount rowscount = new RowsTableCount();
 
-        try (PreparedStatement psGetSubsName = conn.prepareStatement(sql())) {
+        try (PreparedStatement psGetSubsName = databaseConnection.prepareStatement(sql())) {
             int i = 0;
             for (Integer id : idList) {
                 setParameters(psGetSubsName,id);

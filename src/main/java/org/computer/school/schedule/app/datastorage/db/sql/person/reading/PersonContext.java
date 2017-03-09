@@ -16,24 +16,24 @@ import java.util.List;
 /**
  * Created by mac on 11.02.17.
  */
-public class PersonContext implements SQLReadEntity<List<Person>> {
+public class PersonContext implements SQLReadEntity {
     private List<Person> result;
     private List<Integer> identifiers = new ArrayList<>();
+    private Connection databaseConnection;
 
-    private DBConnection DBconnect = new DBConnection();
-    private Connection conn = DBconnect.getConnection();
-
-    public PersonContext() {
+    public PersonContext(Connection databaseConnection) {
+        this.databaseConnection = databaseConnection;
     }
 
-    PersonContext(List<Person> result, List<Integer> identifiers) {
+    PersonContext(Connection databaseConnection, List<Person> result, List<Integer> identifiers) {
+        this.databaseConnection = databaseConnection;
         this.result = result;
         this.identifiers = identifiers;
     }
 
     @Override
-    public List<Person> executeRead() {
-        try (PreparedStatement preparedPerson = conn.prepareStatement(sql())) {
+     public List<Person> executeRead() {
+        try (PreparedStatement preparedPerson = databaseConnection.prepareStatement(sql())) {
             ResultSet resultPerson = preparedPerson.executeQuery();
             result = extractResult(resultPerson);
 
@@ -42,15 +42,12 @@ public class PersonContext implements SQLReadEntity<List<Person>> {
         catch (SQLException e) {
             e.printStackTrace();
         }
-        finally {
-            DBconnect.close(conn);
-        }
         return result;
     }
 
     void setSubscriptionsTitles() throws SQLException{
         SubscriptionsTitlesByID subsNamesObj =
-                new SubscriptionsTitlesByID(identifiers, conn);
+                new SubscriptionsTitlesByID(databaseConnection, identifiers, databaseConnection);
         String[][] subsNames = subsNamesObj.executeRead();
 
         int i = 0;

@@ -17,11 +17,12 @@ public class DeletePerson implements SQLUpdateEntity<Integer[]> {
     private String fname;
     private String surname;
     private String patronymic;
+    private Connection databaseConnection;
 
-    private DBConnection DBconnect = new DBConnection();
-    private Connection conn = DBconnect.getConnection();
+    //private Connection conn = DBconnect.getConnection();
 
-    public DeletePerson(String fname, String surname, String patronymic) {
+    public DeletePerson(Connection databaseConnection, String fname, String surname, String patronymic) {
+        this.databaseConnection = databaseConnection;
         this.fname = fname;
         this.surname = surname;
         this.patronymic = patronymic;
@@ -32,7 +33,7 @@ public class DeletePerson implements SQLUpdateEntity<Integer[]> {
         ResultSet resultSet;
         Integer[] deleteCount = null;
         RowsTableCount rowscount = new RowsTableCount();
-        try (PreparedStatement preparedSelectID = conn.prepareStatement(sql())) {
+        try (PreparedStatement preparedSelectID = databaseConnection.prepareStatement(sql())) {
             /** Getting ids of users **/
             setEntityParameters(preparedSelectID);
             resultSet = preparedSelectID.executeQuery();
@@ -50,15 +51,12 @@ public class DeletePerson implements SQLUpdateEntity<Integer[]> {
             String sqlSubscriptionDelete = "Delete from subscriptions " +
                                            "Where user_id = ?";
             DeleteEntity deleteEntity =
-                    new DeleteEntity(personID, sqlPersonDelete, sqlSubscriptionDelete, conn);
+                    new DeleteEntity(personID, sqlPersonDelete, sqlSubscriptionDelete, databaseConnection);
 
             deleteCount = deleteEntity.deleteEntity();
         }
         catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
-            DBconnect.close(conn);
         }
         return deleteCount;
     }

@@ -4,15 +4,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Created by mac on 22.02.17.
  */
 public class WebPageMessage {
-    private HttpServletResponse resp;
+    private PrintWriter printPage;
 
     public WebPageMessage(HttpServletResponse resp) {
-        this.resp = resp;
+        try {
+            printPage = resp.getWriter();
+        }
+            catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /** Method converts some object to the json-string and
@@ -35,11 +41,6 @@ public class WebPageMessage {
      *  @param messageString text that will be shown
      */
     public void message(String messageString) {
-        try {
-            resp.getWriter().println(messageString);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        printPage.println(messageString);
     }
 }

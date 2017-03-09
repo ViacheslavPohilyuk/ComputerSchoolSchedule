@@ -1,5 +1,6 @@
 package org.computer.school.schedule.app.servlet.entities.operations;
 
+import org.computer.school.schedule.app.datastorage.db.DBConnection;
 import org.computer.school.schedule.app.entity.pojo.course.LectureRoomPOJO;
 import org.computer.school.schedule.app.entity.interfaces.course.Course;
 import org.computer.school.schedule.app.entity.pojo.course.CoursePOJO;
@@ -14,6 +15,7 @@ import org.computer.school.schedule.app.entity.pojo.course.TimeTablePOJO;
 import org.computer.school.schedule.app.servlet.WebPageMessage;
 
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,35 +26,31 @@ import java.util.Map;
  * Created by mac on 22.02.17.
  */
 public class CoursesServletOperations implements ServletEntityOperations {
-    private Course course;
-
-    private HttpServletResponse resp;
     private String[] pathTokens;
     private Map<String, String[]> pathParams;
-
+    private Connection databaseConnection;
     private WebPageMessage m;
 
-    public CoursesServletOperations(HttpServletResponse resp,
+    public CoursesServletOperations(Connection databaseConnection,
+                                    HttpServletResponse resp,
                                     Map<String, String[]> pathParams,
                                     String[] pathTokens) {
-        this.resp = resp;
         this.pathTokens = pathTokens;
         this.pathParams = pathParams;
-
+        this.databaseConnection = databaseConnection;
         m = new WebPageMessage(resp);
     }
 
     @Override
     public void read() {
         String courseName = pathParams.get("coursename")[0];
-        ReadCourse readCourse = new ReadCourse(courseName); // methods for reading lectures
-                                                            // of a course from the db
-
+        ReadCourse readCourse = new ReadCourse(databaseConnection, courseName); //   methods for reading lectures
+                                                                                //   of a course from the db
         String readingOperation = pathTokens[3];
 
         switch (readingOperation) {
             case "all": {
-                course = new CoursePOJO(courseName, new TimeTablePOJO(readCourse.allLecturesCourse()));
+                Course course = new CoursePOJO(courseName, new TimeTablePOJO(readCourse.allLecturesCourse()));
                 m.jsonMessage(course);
                 break;
             }
@@ -67,7 +65,7 @@ public class CoursesServletOperations implements ServletEntityOperations {
                     }
                     case "forthcoming": {
                         DateFilter dateFilter = new DateFilter();
-                        course = new CoursePOJO(courseName, new TimeTablePOJO(readCourse.allLecturesCourse()));
+                        Course course = new CoursePOJO(courseName, new TimeTablePOJO(readCourse.allLecturesCourse()));
                         Lecture lecture = dateFilter.forthcomingLecture(course);
                         m.jsonMessage(lecture);
                         break;
@@ -82,7 +80,7 @@ public class CoursesServletOperations implements ServletEntityOperations {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy-HH:mm");
                 DateFilter dateFilter = new DateFilter();
 
-                course = new CoursePOJO(courseName, new TimeTablePOJO(readCourse.allLecturesCourse()));
+                Course course = new CoursePOJO(courseName, new TimeTablePOJO(readCourse.allLecturesCourse()));
                 try {
                     Date from = sdf.parse(pathParams.get("from")[0]);
                     Date to = sdf.parse(pathParams.get("to")[0]);
@@ -118,6 +116,7 @@ public class CoursesServletOperations implements ServletEntityOperations {
 
             InsertLecture insertLecture =
                     new InsertLecture(
+                            databaseConnection,
                             coursename,
                             new LecturePOJO(
                                     startTime,
@@ -147,7 +146,7 @@ public class CoursesServletOperations implements ServletEntityOperations {
         String lectureName = pathParams.get("lecturename")[0];
 
         DeleteLecture deleteLecture =
-                        new DeleteLecture(courseName, lectureName);
+                        new DeleteLecture(databaseConnection, courseName, lectureName);
 
         Integer[] deletedRows = deleteLecture.updateProcessing();
 

@@ -13,14 +13,13 @@ import java.sql.SQLException;
  */
 public class SubscriptionsIDByTitles implements SQLReadEntity<int[]> {
     private String[] subscriptions;
+    private Connection databaseConnection;
 
-    private Connection conn;
-
-    SubscriptionsIDByTitles(String[] subscriptions, Connection conn) throws SQLException{
+    SubscriptionsIDByTitles(String[] subscriptions, Connection databaseConnection) throws SQLException{
         this.subscriptions = subscriptions;
-        this.conn = conn;
+        this.databaseConnection = databaseConnection;
 
-        conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        databaseConnection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
     }
 
     @Override
@@ -34,7 +33,7 @@ public class SubscriptionsIDByTitles implements SQLReadEntity<int[]> {
         int[] result = null;
         RowsTableCount rowscount = new RowsTableCount();
 
-        try (PreparedStatement preparedSubsID = conn.prepareStatement(sql())) {
+        try (PreparedStatement preparedSubsID = databaseConnection.prepareStatement(sql())) {
             setSubsParameters(preparedSubsID);
             resultSet = preparedSubsID.executeQuery();
 

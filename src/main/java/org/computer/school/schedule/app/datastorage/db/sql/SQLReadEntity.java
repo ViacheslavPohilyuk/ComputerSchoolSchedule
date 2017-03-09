@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 /**
  * Created by mac on 15.02.17.
  */
-public interface SQLReadEntity<T> {
+public interface SQLReadEntity<T>  {
     /**
      * This method create PreparedStatement object and
      * retrieves other methods for reading data about the

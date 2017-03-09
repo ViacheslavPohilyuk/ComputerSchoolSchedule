@@ -20,9 +20,7 @@ import java.util.List;
 public class CourseContext implements SQLReadEntity<List<Lecture>> {
     private String courseName;
     private List<Lecture> result = new ArrayList<>();
-
-    private DBConnection DBconnect = new DBConnection();
-    private Connection conn = DBconnect.getConnection();
+    private Connection databaseConnection;
 
     /** If we want get lectures of a course
      *  by their title, we appropriate to object
@@ -35,7 +33,8 @@ public class CourseContext implements SQLReadEntity<List<Lecture>> {
     private String lectureName = "";
 
     /* Constructor for getting lectures by their title */
-    public CourseContext(String courseName, String lectureName) {
+    CourseContext(Connection databaseConnection, String courseName, String lectureName) {
+        this.databaseConnection = databaseConnection;
         this.courseName = courseName;
         this.lectureName = lectureName;
 
@@ -46,22 +45,20 @@ public class CourseContext implements SQLReadEntity<List<Lecture>> {
     }
 
     /* Constructor for getting all lectures */
-    public CourseContext(String courseName) {
+    CourseContext(Connection databaseConnection, String courseName) {
+        this.databaseConnection = databaseConnection;
         this.courseName = courseName;
     }
 
     @Override
     public List<Lecture> executeRead() {
-        try (PreparedStatement preparedCourse = conn.prepareStatement(sql())) {
+        try (PreparedStatement preparedCourse = databaseConnection.prepareStatement(sql())) {
              setParameters(preparedCourse);
              ResultSet resultCourse = preparedCourse.executeQuery();
              result = extractResult(resultCourse);
         }
         catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
-            DBconnect.close(conn);
         }
         return result;
     }
