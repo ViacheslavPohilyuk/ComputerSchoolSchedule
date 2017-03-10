@@ -34,11 +34,11 @@ public class SubscriptionsTitlesByID implements SQLReadEntity<String[][]>  {
         String[][] subscriptions = new String[idList.size()][];
         RowsTableCount rowscount = new RowsTableCount();
 
-        try (PreparedStatement psGetSubsName = databaseConnection.prepareStatement(sql())) {
+        try (PreparedStatement preparedGetSubsName = databaseConnection.prepareStatement(sql())) {
             int i = 0;
             for (Integer id : idList) {
-                setParameters(psGetSubsName,id);
-                resultSet = psGetSubsName.executeQuery();
+                setParameters(preparedGetSubsName,id);
+                resultSet = preparedGetSubsName.executeQuery();
 
                 int j = 0;
                 subscriptions[i] = new String[rowscount.rowsCount(resultSet)];

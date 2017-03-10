@@ -24,7 +24,7 @@ public interface ServletEntityOperations {
      *  operation/courses/read/lecture/bytitle?coursename=%title of the course%&
      *                                         lecturename=%title of the lecture%
      *  URL for getting a forthcoming lecture of some course:
-     *  operation/courses/read/lecture/forthcoming?coursename=%title of the course%&
+     *  operation/courses/read/lecture/forthcoming?coursename=%title of the course%
      *  period
      *  Date format: dd.MM.yyyy-HH:mm
      *  URL for getting all lectures of a course in some period of time:
