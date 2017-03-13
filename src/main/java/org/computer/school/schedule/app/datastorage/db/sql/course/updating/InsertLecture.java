@@ -64,8 +64,8 @@ public class InsertLecture implements SQLUpdateEntity<Integer> {
     public String sql() {
         return "insert into lectures(start_time, end_time, lecture_room_id, title, description)" +
                 " VALUES(?,?," +
-                                 "(Select id from lecture_rooms " +
-                                  "Where floor = ? and number = ? and description = ?)," +
+                       "(Select id from lecture_rooms " +
+                        "Where floor = ? and number = ? and description = ?)," +
                         "?,?)";
     }
 

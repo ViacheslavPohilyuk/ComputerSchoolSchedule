@@ -62,9 +62,9 @@ public class SubscriptionsTitlesByID implements SQLReadEntity<String[][]>  {
 
     @Override
     public String sql() {
-        return "Select title from courses " +
+        return  "Select title from courses " +
                 "Where id in (Select course_id from subscriptions " +
-                "Where user_id = (Select id from users " +
-                "Where id = ?))";
+                             "Where user_id = (Select id from users " +
+                                              "Where id = ?))";
     }
 }

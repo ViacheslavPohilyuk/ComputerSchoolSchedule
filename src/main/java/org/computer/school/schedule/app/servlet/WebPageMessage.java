@@ -29,7 +29,7 @@ public class WebPageMessage {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            message(objectMapper.writeValueAsString(entity));
+            message(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(entity));
         }
         catch (IOException e) {
             message("Converting to json error!");

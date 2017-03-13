@@ -61,13 +61,14 @@ public class SubscriptionsIDByTitles implements SQLReadEntity<int[]> {
 
     private String sqlQueryConstructor() {
         int sub_count = subscriptions.length;
-        String selectStatement = " WHERE title = ?";
+        StringBuilder selectStatement =
+                new StringBuilder(" WHERE title = ?");
         if(sub_count > 1) {
             for(int i = 0; i < (sub_count - 1); i++) {
-                selectStatement += " OR title = ?";
+                selectStatement.append(" OR title = ?");
             }
         }
-        return  selectStatement;
+        return selectStatement.toString();
     }
 
     private void setSubsParameters(PreparedStatement statement) throws SQLException {

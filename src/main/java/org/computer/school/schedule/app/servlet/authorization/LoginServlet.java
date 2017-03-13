@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
         for (Person p : persons) {
             personEmail = p.getEmail();
             personPassword = p.getPassword();
-            if (login.equals(personEmail) &
+            if (login.equals(personEmail) &&
                     password.equals(personPassword)) {
                 m.message("You successfully logged in!\n");
 

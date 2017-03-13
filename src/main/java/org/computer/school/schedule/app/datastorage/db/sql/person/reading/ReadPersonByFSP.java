@@ -63,7 +63,7 @@ public class ReadPersonByFSP implements SQLReadEntity<List<Person>> {
 
     @Override
     public String sql() {
-        return "select * from users " +
+        return  "select * from users " +
                 "where fname = ? AND surname = ? AND patronymic = ?";
     }
 }
