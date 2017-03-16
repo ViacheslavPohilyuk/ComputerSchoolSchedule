@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * Created by mac on 22.02.17.
  */
-public class ServletURIProcessing extends HttpServlet implements ServletURIProcessingInterface {
+public class ServletURIProcessing extends HttpServlet {
     private HttpServletRequest request;
     private HttpServletResponse response;
     private String[] pathTokens;
@@ -38,8 +38,27 @@ public class ServletURIProcessing extends HttpServlet implements ServletURIProce
         URIProcessing();
     }
 
-    @Override
-    public void URIProcessing() {
+    /** In this method occurring the URI fragmentation
+     *
+     * Getting URI tokens
+     * For partition some URI on tokens we use method that called <code>split</code>
+     * of the String class with value of the parameter of this method  - "/".
+     * The result of these operation is massive of String objects <code>pathTokens</code>
+     *
+     * Getting URI parameters
+     * For getting parameters (values that are placed after symbol "?" in URI)
+     * of URL we use getParameterMap method for HTTPServletRequest
+     * object <code>req</code>, and put the result of this method
+     * to the <code>Map<String, String[]> pathParams</code>
+     *
+     * Operations of servlets
+     * Now we put <code>pathTokens</code> and <code>pathParams</code>
+     * to the constructor of <code>CoursesServletOperations</code> object
+     * or <code>PersonsServletOperations</code> object.
+     * And retrieving method <code>choiceServletOperation</code>
+     * for use operation (read, insert, delete) of required entity
+     */
+    private void URIProcessing() {
         Map<String, String[]> pathParams;
         String pathInfo = request.getPathInfo();
         if (!pathInfo.isEmpty()) {
@@ -70,8 +89,17 @@ public class ServletURIProcessing extends HttpServlet implements ServletURIProce
         }
     }
 
-    @Override
-    public void choiceServletOperation() {
+    /** Using one of three operations Read, Insert and Delete
+     *  of either Course entity or Person entity.
+     *  If variable of the interface ServletEntityOperations
+     *  that named <code>servletOperation</code> contains
+     *  <code>CoursesServletOperations</code> object
+     *  we will using methods for courses
+     *  Otherwise we use methods of the
+     *  <code>PersonsServletOperations</code> object
+     *  for persons
+     */
+    private void choiceServletOperation() {
         String operation = pathTokens[2];
         if(!operation.isEmpty()) {
             switch (pathTokens[2]) {

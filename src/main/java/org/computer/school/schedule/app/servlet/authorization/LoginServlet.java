@@ -24,8 +24,6 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        WebPageMessage m = new WebPageMessage(response);
-
         /* Getting connection to the database */
         DBConnection dbConnection = (DBConnection) getServletContext().getAttribute("dbConnection");
         Connection databaseConnection = dbConnection.getConnection();
@@ -45,8 +43,6 @@ public class LoginServlet extends HttpServlet {
             personPassword = p.getPassword();
             if (login.equals(personEmail) &&
                     password.equals(personPassword)) {
-                m.message("You successfully logged in!\n");
-
                 /* Creating the new cookie */
                 Cookie loginCookie = new Cookie("login", login);
                 /* Setting cookie to expiry in 30 mins */
