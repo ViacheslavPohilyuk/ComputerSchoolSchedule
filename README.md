@@ -1,5 +1,5 @@
 # ComputerSchoolScheduleProject
-Appointment of this project is processing data of some computer school.
+Appointment of this project is processing data of some computer school.  
 All data storages in MySQL database.
 Project processes two main entities: course and person.  <br />
 Some features those available at that moment:
