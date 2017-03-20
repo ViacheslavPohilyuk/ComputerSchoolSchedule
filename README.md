@@ -10,8 +10,7 @@ Some features those available at that moment:
                getting lectures in arbitrary period in time)
                
   #### Project descriptions
-   For descriptions go to this link and download the folder "CSSchedule Descriptions": <br />
-   <https://www.dropbox.com/sh/2j5elr4j02vyye3/AACkPbMMtkN7ViPiznMyqvf-a?dl=0> <br />
-   Samples of using URLs you can find in the file URLsSchedule.pdf
+   For descriptions go to this link and download the folder "CSSchedule Descriptions":  
+   <https://www.dropbox.com/sh/2j5elr4j02vyye3/AACkPbMMtkN7ViPiznMyqvf-a?dl=0>  
   #### Database 
    In the folder "sql" you can find sql-scripts for creating tables and inserting initial data
