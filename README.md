@@ -3,7 +3,7 @@ Appointment of this project is processing data of some computer school.
 All data storages in MySQL database.
 Project processes two main entities: course and person.  <br />
 Some features those available at that moment:
-* Authorization (now only checking data(login, password) of some user)
+* Authorization
 - Operatinons those process data of courses and persons: 
   reading, inserting and deleting entity
 - Date filter (getting forthcoming lecture of some course and
